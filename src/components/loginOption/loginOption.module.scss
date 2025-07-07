@@ -1,7 +1,13 @@
 .login-option {
-    width: 340px;
-    height: 40px;
-    border-radius: 20px;
-    border: 1px solid #ccc;
+    width: 288px;
+    height: 38px;
+    transition: background-color 0.218s;
+    bottom: 0;
+    left: 0;
+    border: none;
+    background-color: white;
+    border: 1px solid #dadce0;
     margin: 5px 0;
+    border-radius: 4px;
+    color: #3c4043;
 }
