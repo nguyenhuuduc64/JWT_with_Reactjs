@@ -4,7 +4,7 @@ import Button from '../../button/Button';
 import LoginForm from '../../loginForm/LoginForm';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleForm } from '../../../product/formSlice';
+import { toggleLoginForm, toggleSignupForm } from '../../../product/formSlice';
 const cx = classNames.bind(styles);
 
 function Header() {
@@ -25,10 +25,16 @@ function Header() {
                     name="Đăng nhập"
                     styles={buttonStyle}
                     onClick={() => {
-                        dispatch(toggleForm());
+                        dispatch(toggleLoginForm());
                     }}
                 />
-                <Button name="Đăng ký" styles={buttonStyle} onClick={() => (window.location.href = '/signup')} />
+                <Button
+                    name="Đăng ký"
+                    styles={buttonStyle}
+                    onClick={() => {
+                        dispatch(toggleSignupForm());
+                    }}
+                />
             </div>
         </header>
     );

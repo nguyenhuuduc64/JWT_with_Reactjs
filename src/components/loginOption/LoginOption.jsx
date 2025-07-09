@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './loginOption.module.scss';
 import classNames from 'classnames/bind';
-import { showLoginGoogleForm, toggleForm } from '../../product/formSlice';
+import { showLoginGoogleForm, toggleLoginForm } from '../../product/formSlice';
 import { useDispatch } from 'react-redux';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
