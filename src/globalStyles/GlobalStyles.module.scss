@@ -6,8 +6,10 @@
 }
 
 :root {
-    --header-height: 60px;
+    --header-height: 70px;
     --primary-color: #08b2f0;
+    --btn-color: #96BEFF;
+    --descripion-color: #666;
 }
 
 body {
@@ -15,4 +17,8 @@ body {
 }
 
 .wrapper {
+}
+
+iframe{
+    width: 80%;
 }

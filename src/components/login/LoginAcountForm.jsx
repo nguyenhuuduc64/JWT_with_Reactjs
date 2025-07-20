@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import classNames from 'classnames/bind';
-import styles from './login.module.scss';
+import styles from './loginAcountForm.module.scss';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 const cx = classNames.bind(styles);
-function Login() {
+function LoginAcountForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const handleLogin = async (e) => {
@@ -20,10 +22,13 @@ function Login() {
             console.error('Login failed:', error);
         }
     };
+    const dispatch = useDispatch();
+    const isLoginAccountFormVisible = useSelector((state) => state.form.isLoginAccountFormVisible);
+
     return (
         <div className={cx('wrapper')}>
             <form onSubmit={handleLogin} className={cx('login-form')}>
-                <h2 className={cx('title')}>Đăng nhập</h2>
+                <h2 className={cx('title')}>Đăng nhập vào Pi</h2>
                 <div className={cx('input-group')}>
                     <label htmlFor="username" className={cx('label')}>
                         Tên đăng nhập
@@ -61,4 +66,4 @@ function Login() {
         </div>
     );
 }
-export default Login;
+export default LoginAcountForm;

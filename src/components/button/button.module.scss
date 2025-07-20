@@ -1,8 +1,20 @@
 .wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    background-color: #f8f9fa;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+    padding: 6px 20px;
+    border-radius: 99px;
+    color: #fff;
+    background: var(--btn-color);
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .25s;
+    margin: 0 5px;
+}
+
+
+.button{
+    border: none;
+    background-color: transparent;
+    text-decoration: underline;
+    font-weight: bold;
+    margin: 0 5px;
 }

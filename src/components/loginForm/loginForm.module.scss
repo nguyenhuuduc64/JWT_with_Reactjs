@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 400px;
+    width: 500px;
     height: 500px;
     background: linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%);
     position: absolute;
@@ -11,4 +11,18 @@
     left: 50%;
     transform: translate(-50%, -50%);
     border-radius: 15px;
+}
+
+.loggin-btn{
+    display: flex;
+    position: relative;
+    width: 100%;
+}
+
+.icon{
+    position: absolute;
+    top: 0;
+    left: 63px;
+    top: 22px;
+    z-index: 2;
 }

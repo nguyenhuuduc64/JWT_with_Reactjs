@@ -16,6 +16,8 @@ function SignupForm() {
                 username: event.target.username.value,
                 email: event.target.email.value,
                 password: event.target.password.value,
+                fullname: event.target.fullname.value,
+                role: event.target.role.value,
             })
             .then((response) => {
                 alert('Tạo tài khoản thành công!');
@@ -24,40 +26,59 @@ function SignupForm() {
     };
 
     return (
-        <div className = {cx('wrapper-background')}>
+        <div className={cx('wrapper-background')}>
             <div className={cx('wrapper')}>
-                <div className={cx('logo')}>
+                {/*<div className={cx('logo')}>
                     <img src="./assets/img/logo.png" alt="" />
-                    <h5 className={cx('title')}>Đăng ký tài khoản với MATHEMATICS</h5>
-                </div>
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="username" className="form-label">
-                            User name
-                        </label>
-                        <input type="text" name="username" className="form-control" id="username" />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputEmail1" className="form-label">
-                            Email address
-                        </label>
-                        <input
-                            type="email"
-                            name="email"
-                            className="form-control"
-                            id="exampleInputEmail1"
-                            aria-describedby="emailHelp"
-                        />
-                    </div>
-                    <div className="mb-3">
-                        <label htmlFor="exampleInputPassword1" className="form-label">
-                            Password
-                        </label>
-                        <input type="password" name="password" className="form-control" id="exampleInputPassword1" />
-                    </div>
+                </div>*/}
+                <h5 className={cx('title')}>Đăng ký tài khoản mới</h5>
 
-                    <button type="submit" className="btn btn-primary">
-                        Submit
+                <form onSubmit={handleSubmit}>
+                    <div className={cx('input-group')}>
+                        <label htmlFor="fullname" className="form-label">
+                            Họ và tên
+                        </label>
+                        <input type="text" name="fullname" id="fullname" />
+                    </div>
+                    <div className={cx('input-group')}>
+                        <label htmlFor="username" className="form-label">
+                            Tên đăng nhập
+                        </label>
+                        <input type="text" name="username" id="username" />
+                    </div>
+                    <div className={cx('input-group')}>
+                        <label htmlFor="exampleInputEmail1" className="form-label">
+                            Địa chỉ Email
+                        </label>
+                        <input type="email" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                    </div>
+                    <div className={cx('input-group')}>
+                        <label htmlFor="exampleInputPassword1" className="form-label">
+                            Mật khẩu
+                        </label>
+                        <input type="password" name="password" id="exampleInputPassword1" />
+                    </div>
+                    <div className={cx('input-group')}>
+                        <label htmlFor="username" className="form-label">
+                            Bạn là
+                        </label>
+                        <div style={{ display: 'flex', gap: '20px' }}>
+                            <div style={{ margin: '0 20px' }}>
+                                <label htmlFor="" style={{ margin: '0 10px' }}>
+                                    Học sinh
+                                </label>
+                                <input type="radio" name="role" value="student" />
+                            </div>
+                            <div style={{ margin: '0 20px' }}>
+                                <label htmlFor="" style={{ margin: '0 10px' }}>
+                                    Giáo viên
+                                </label>
+                                <input type="radio" name="role" value="teacher" />
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" className={cx('login-btn')}>
+                        Đăng ký tài khoản
                     </button>
                 </form>
             </div>

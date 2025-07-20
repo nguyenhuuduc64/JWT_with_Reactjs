@@ -6,6 +6,7 @@ const formSlice = createSlice({
         isFormVisible: false, // Hiện form chọn phương thức
         isLoginGoogleFormVisible: false, // Có thể không cần nếu dùng redirect
         isLoginAccountFormVisible: false, // Hiện form đăng nhập account
+        isSignupFormVisible: false, // Hiện form đăng ký
     },
     reducers: {
         toggleLoginForm: (state) => {
@@ -34,14 +35,21 @@ const formSlice = createSlice({
             state.isLoginAccountFormVisible = false;
         },
         toggleSignupForm: (state) => {
-            state.isFormVisible = false;
+            state.isSignupFormVisible = !state.isSignupFormVisible;
             state.isLoginGoogleFormVisible = false;
-            state.isLoginAccountFormVisible = !state.isLoginAccountFormVisible;
+            state.isLoginAccountFormVisible = false;
         },
     },
 });
 
-export const { toggleLoginForm, showForm, hideForm, showLoginAccountForm, showLoginGoogleForm, toggleSignupForm } =
-    formSlice.actions;
+export const {
+    toggleLoginForm,
+    showForm,
+    hideForm,
+    showLoginAccountForm,
+    showLoginGoogleForm,
+    toggleSignupForm,
+    isSignupFormVisible,
+} = formSlice.actions;
 
 export default formSlice.reducer;

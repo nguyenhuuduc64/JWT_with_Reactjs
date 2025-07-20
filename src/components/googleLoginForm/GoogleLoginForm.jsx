@@ -1,22 +1,29 @@
 import React from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
+import Button from '../button/Button';
 
 function GoogleLoginForm() {
     return (
-        <div>
-            <GoogleLogin
-                onSuccess={(credentialResponse) => {
-                    const decoded = jwtDecode(credentialResponse.credential);
+        <GoogleLogin
+            onSuccess={(credentialResponse) => {
+                const decoded = jwtDecode(credentialResponse.credential);
 
-                    console.log('Thông tin người dùng:', decoded);
-                    // Gửi token này về backend để xác thực (nếu có backend)
-                }}
-                onError={() => {
-                    console.log('Đăng nhập thất bại');
-                }}
-            />
-        </div>
+                console.log('Thông tin người dùng:', decoded);
+                // Gửi token này về backend để xác thực (nếu có backend)
+            }}
+            onError={() => {
+                console.log('Đăng nhập thất bại');
+            }}
+            containerProps={{
+                style: {
+                    width: '300px',
+                    height: '40px',
+                    margin: 'auto',
+                },
+                className: 'my-google-container',
+            }}
+        />
     );
 }
 
