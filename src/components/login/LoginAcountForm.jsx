@@ -4,6 +4,7 @@ import classNames from 'classnames/bind';
 import styles from './loginAcountForm.module.scss';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
+import Form from '../form/Form.jsx';
 const cx = classNames.bind(styles);
 function LoginAcountForm() {
     const [username, setUsername] = useState('');
@@ -22,48 +23,15 @@ function LoginAcountForm() {
             console.error('Login failed:', error);
         }
     };
-    const dispatch = useDispatch();
-    const isLoginAccountFormVisible = useSelector((state) => state.form.isLoginAccountFormVisible);
-
     return (
-        <div className={cx('wrapper')}>
-            <form onSubmit={handleLogin} className={cx('login-form')}>
-                <h2 className={cx('title')}>Đăng nhập vào Pi</h2>
-                <div className={cx('input-group')}>
-                    <label htmlFor="username" className={cx('label')}>
-                        Tên đăng nhập
-                    </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        className={cx('input')}
-                        required
-                        autoComplete="username"
-                        placeholder="Nhập tên đăng nhập"
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div className={cx('input-group')}>
-                    <label htmlFor="password" className={cx('label')}>
-                        Mật khẩu
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        className={cx('input')}
-                        required
-                        autoComplete="current-password"
-                        placeholder="Nhập mật khẩu"
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                <button type="submit" className={cx('login-btn')}>
-                    Đăng nhập
-                </button>
-            </form>
-        </div>
+        <Form
+            className={cx('wrapper')}
+            formName={'Đăng nhập tài khoản'}
+            fieldsInput={['username', 'password']}
+            fieldsOutput={['username', 'password']}
+            isSubmit={true}
+            submitName="Đăng nhập"
+        ></Form>
     );
 }
 export default LoginAcountForm;

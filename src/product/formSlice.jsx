@@ -1,55 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const formSlice = createSlice({
-    name: 'form',
+    name: 'forms',
     initialState: {
-        isFormVisible: false, // Hiện form chọn phương thức
-        isLoginGoogleFormVisible: false, // Có thể không cần nếu dùng redirect
-        isLoginAccountFormVisible: false, // Hiện form đăng nhập account
-        isSignupFormVisible: false, // Hiện form đăng ký
+        visibleForms: {}, // { formName: true/false }
     },
     reducers: {
-        toggleLoginForm: (state) => {
-            state.isFormVisible = !state.isFormVisible;
-            state.isLoginGoogleFormVisible = false;
-            state.isLoginAccountFormVisible = false;
+        showForm: (state, action) => {
+            state.visibleForms[action.payload] = true;
         },
-        showForm: (state) => {
-            state.isFormVisible = true;
-            state.isLoginGoogleFormVisible = false;
-            state.isLoginAccountFormVisible = false;
+        hideForm: (state, action) => {
+            state.visibleForms[action.payload] = false;
         },
-        hideForm: (state) => {
-            state.isFormVisible = false;
-            state.isLoginGoogleFormVisible = false;
-            state.isLoginAccountFormVisible = false;
-        },
-        showLoginAccountForm: (state) => {
-            state.isFormVisible = false;
-            state.isLoginGoogleFormVisible = false;
-            state.isLoginAccountFormVisible = true;
-        },
-        showLoginGoogleForm: (state) => {
-            state.isFormVisible = false;
-            state.isLoginGoogleFormVisible = true;
-            state.isLoginAccountFormVisible = false;
-        },
-        toggleSignupForm: (state) => {
-            state.isSignupFormVisible = !state.isSignupFormVisible;
-            state.isLoginGoogleFormVisible = false;
-            state.isLoginAccountFormVisible = false;
+        toggleForm: (state, action) => {
+            state.visibleForms[action.payload] = !state.visibleForms[action.payload];
         },
     },
 });
 
-export const {
-    toggleLoginForm,
-    showForm,
-    hideForm,
-    showLoginAccountForm,
-    showLoginGoogleForm,
-    toggleSignupForm,
-    isSignupFormVisible,
-} = formSlice.actions;
+export const { showForm, hideForm, toggleForm } = formSlice.actions;
 
 export default formSlice.reducer;

@@ -1,28 +1,19 @@
-.wrapper{
-    position: absolute;
-    top: 50vh;
-    left: 50vw;
-    transform: translate(-50%, -50%);
-    background: linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%);
-    padding: 30px 20px;
-    & input{
-        width: 100%;
-    }
-}
+
 // Đẹp mắt cho form đăng nhập
 .wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 500px;
     background: linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%);
     position: absolute;
-    top: 40%;
-    left: 50%;
+    top: 50vh;
+    left: 50vw;
     transform: translate(-50%, -50%);
     border-radius: 15px;
     padding: 50px 10px;
+    margin-top: 60px;
+    overflow-y: hidden;
 }
 
 
@@ -39,6 +30,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
 }
 
 .label {
@@ -83,5 +75,25 @@ form > *{
     background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%);
 }
 .wrapper {
-    margin-top: 60px;
+}
+
+.close-btn{
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+    
+    line-height: 30px;
+    text-align: center;
+    padding: 10px;
+    &:hover{
+        cursor: pointer;
+        background-color: var(--hover-color-btn);
+    }
+}
+
+.login-form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

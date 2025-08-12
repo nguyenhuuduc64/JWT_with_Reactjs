@@ -1,26 +1,31 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { Children, useContext, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './form.module.scss';
 import axios from 'axios';
 import { Context } from '../../App';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faClose } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch, useSelector } from 'react-redux';
+import { hideForm } from '../../product/formSlice.jsx';
 const cx = classNames.bind(styles);
-function Form({ fieldsInput = [], fieldsOutput, onSubmit, formName }) {
+function Form({ fieldsInput = [], fieldsOutput, isSubmit = true, formName, children, submitName, api }) {
     const { id, setId } = useContext(Context);
     const [formData, setFormData] = useState({});
+    const dispatch = useDispatch();
+    const isVisible = useSelector((state) => state.forms.visibleForms[formName] || false);
+
     useEffect(() => {
         const getTeacherId = async () => {
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
-                const res = await fetch('http://localhost:5000/auth/me', {
+                const response = await axios.get(`${import.meta.env.VITE_BE_API_BASE_URL}/auth/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                const data = await res.json();
-                setId(data._id);
-            } catch (err) {
-                console.error('Lỗi lấy thông tin người dùng:', err);
+            } catch (error) {
+                console.error('Error fetching teacher ID:', error);
             }
         };
         getTeacherId();
@@ -32,19 +37,33 @@ function Form({ fieldsInput = [], fieldsOutput, onSubmit, formName }) {
             [e.target.name]: e.target.value,
         });
     };
+
+    const handleCloseForm = () => {};
     const keysList = fieldsOutput;
-    const handleSubmitForm = () => {
-        axios.post('http://localhost:5000/course/create', {
-            ...formData,
-            teacherId: id,
-        });
-        alert('da submit');
+    const handleSubmitForm = (e) => {
+        e.preventDefault();
+        console.log('formData', formData);
+        axios
+            .post(api, {
+                ...formData,
+                teacherId: id ? id : '',
+            })
+            .then((res) => {
+                if (res.data.token) {
+                    localStorage.setItem('token', res.data.token);
+                    window.location.reload();
+                } else {
+                    console.log('res', res);
+                }
+            })
+            .catch(() => alert('Đăng ký thất bại'));
     };
+    if (!isVisible) return null;
+
     return (
-        <div className={cx('wrapper', 'col-md-6', 'login-form')}>
-            <h4>{formName}</h4>
-            <form className={cx('login-form', 'wrapper')} onSubmit={handleSubmitForm}>
-                <h2 className={cx('title')}>{formName}</h2>
+        <div className={cx('wrapper', 'col-md-6', 'col-lg-4')}>
+            <h2 className={cx('title')}>{formName}</h2>
+            <form className={cx('login-form', '')}>
                 {fieldsInput.map((name, index) => {
                     return (
                         <div className={cx('input-group')} key={index}>
@@ -65,10 +84,17 @@ function Form({ fieldsInput = [], fieldsOutput, onSubmit, formName }) {
                         </div>
                     );
                 })}
-                <button type="submit" className={cx('login-btn')}>
-                    Đăng nhập
-                </button>
+                {children}
+
+                {isSubmit && (
+                    <button type="submit" className={cx('login-btn')} onClick={handleSubmitForm}>
+                        {submitName || 'Submit'}
+                    </button>
+                )}
             </form>
+            <div className={cx('close-btn')} onClick={() => dispatch(hideForm(formName))}>
+                <FontAwesomeIcon icon={faClose}></FontAwesomeIcon>
+            </div>
         </div>
     );
 }
