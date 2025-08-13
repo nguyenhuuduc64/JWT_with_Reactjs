@@ -5,6 +5,8 @@ import { useState } from 'react';
 import Form from '../../form/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import { showForm } from '../../../product/formSlice';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar, faPlus, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
@@ -18,10 +20,16 @@ function Sidebar() {
 
     return (
         <div className={cx('wrapper')}>
-            <h2>Sidebar</h2>
             <ul className={cx('sidebar-route')}>
-                <a onClick={() => dispatch(showForm('Tạo khóa học mới'))}>Tạo khóa học mới</a>
-                <a onClick={handleSubmit}>Theo dõi tiến độ</a>
+                <div className={cx('sidebar-item')} onClick={() => dispatch(showForm('Tạo khóa học mới'))}>
+                    <FontAwesomeIcon icon={faPlusSquare} className={cx('icon')} />
+                    <a>Tạo</a>
+                </div>
+                <div className={cx('sidebar-item')}>
+                    <FontAwesomeIcon icon={faCalendar} className={cx('icon')} />
+
+                    <a onClick={handleSubmit}>Theo dõi</a>
+                </div>
             </ul>
 
             <Form

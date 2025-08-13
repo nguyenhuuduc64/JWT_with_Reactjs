@@ -46,13 +46,13 @@ function CourseCard({ course }) {
             <div className={cx('course-body')}>
                 <div className={cx('course-title')}>{course.title}</div>
                 <div className={cx('descripion')}>{course.description}</div>
-            </div>
-            <div className={cx('course-footer')}>
-                <FontAwesomeIcon
-                    icon={faEllipsis}
-                    className={cx('icon')}
-                    onClick={() => setMenuState((prev) => !prev)}
-                />
+                <div className={cx('course-footer')}>
+                    <FontAwesomeIcon
+                        icon={faEllipsis}
+                        className={cx('icon')}
+                        onClick={() => setMenuState((prev) => !prev)}
+                    />
+                </div>
             </div>
             <div ref={menuRef}>{menuState && <Menu menuItems={menuItems} course={course} />}</div>
         </div>

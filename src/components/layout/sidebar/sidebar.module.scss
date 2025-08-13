@@ -1,9 +1,32 @@
 .wrapper{
-    width: 10%;
     margin-top: 100px;
+    padding: 0 50px 0 0;
 }
 
 .sidebar-route{
     display: flex;
     flex-direction: column;
+}
+
+.sidebar-item{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 5px 0;
+    background-color: #E8EBED;
+    border-radius: 10px;
+    text-align: center;
+    width: 72px;
+    height: 72px;
+    cursor: pointer;
+    &> a{
+        text-decoration: none;
+        color: black;
+        font-size: 12px;
+        font-weight: bolder;
+    }
+}
+
+.icon{
+    font-size: 25px;
 }

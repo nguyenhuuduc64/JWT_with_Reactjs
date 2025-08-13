@@ -1,99 +1,80 @@
-
-// Đẹp mắt cho form đăng nhập
 .wrapper {
-    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, #e0e7ff 0%, #f0fdfa 100%);
-    position: absolute;
-    top: 50vh;
-    left: 50vw;
+    position: fixed;
+    top: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
-    border-radius: 15px;
-    padding: 50px 10px;
-    margin-top: 60px;
-    overflow-y: hidden;
+    border-radius: 8px;
+    padding: 30px 40px;
+    width: 450px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    z-index: 100;
 }
-
-
 
 .title {
     text-align: center;
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: 700;
+    letter-spacing: 2px;
     color: black;
-    margin-bottom: 8px;
+    margin-bottom: 20px;
 }
 
 .input-group {
     display: flex;
     flex-direction: column;
-    gap: 8px;
     width: 100%;
+    margin-bottom: 16px;
 }
 
 .label {
-    font-size: 1rem;
+    font-size: 0.85rem;
     color: #374151;
-    font-weight: bold;
+    font-weight: 500;
 }
 
 .input {
-    padding: 10px 14px;
-    border: 1px solid #d1d5db;  
-    border-radius: 8px;
-    font-size: 1rem;
+    padding: 8px 12px;
+    border: none;
+    border-bottom: 2px solid #d1d5db;
+    font-size: 0.95rem;
     outline: none;
-    width: 100%;
-    height: 40px;
-    border-radius: 20px;
-    background-color: white;
-    transition: border 0.2s;
-}
-.input:focus {
-    border: 1.5px solid #3b82f6;
+    background-color: transparent;
+    transition: border-color 0.2s;
 }
 
-form > *{
-    margin-bottom: 20px;
+.input:focus {
+    border-bottom-color: #3b82f6;
 }
 
 .login-btn {
-    width: 350px;
+    width: 100%;
     height: 40px;
-    border-radius: 20px;
+    border-radius: 6px;
     background: linear-gradient(90deg, #3b82f6 0%, #2563eb 100%);
     color: white;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 600;
     border: none;
     cursor: pointer;
     transition: background 0.2s, transform 0.2s;
 }
+
 .login-btn:hover {
     background: linear-gradient(90deg, #2563eb 0%, #0ea5e9 100%);
 }
-.wrapper {
-}
 
-.close-btn{
+.close-btn {
     position: absolute;
-    top: 0;
-    right: 0;
-    font-size: 25px;
-    
-    line-height: 30px;
-    text-align: center;
-    padding: 10px;
+    top: 10px;
+    right: 10px;
+    font-size: 18px;
+    color: #555;
+    cursor: pointer;
     &:hover{
-        cursor: pointer;
-        background-color: var(--hover-color-btn);
+        color: var(--hover-color-btn);
     }
-}
-
-.login-form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
 }

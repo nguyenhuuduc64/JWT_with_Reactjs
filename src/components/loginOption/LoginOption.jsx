@@ -6,6 +6,8 @@ import { GoogleLogin } from '@react-oauth/google';
 import { jwtDecode } from 'jwt-decode';
 import axios from 'axios';
 import Button from '../button/Button';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 const cx = classNames.bind(styles);
 
 function LoginOption({ name, option, onClick }) {
@@ -23,6 +25,8 @@ function LoginOption({ name, option, onClick }) {
                             console.log('Đang giải mã token...');
                             const res = await axios.post('http://localhost:5000/auth/google', { token });
                             console.log('Đăng nhập thành công:', res.data);
+                            localStorage.setItem('token', res.data.token);
+                            window.location.reload();
                         } catch (err) {
                             console.error('Lỗi xác thực Google: ', err);
                         }
@@ -33,7 +37,14 @@ function LoginOption({ name, option, onClick }) {
                     width="400px"
                 />
             )}
-            {option == 'logwithaccount' && <p className={cx('login-button')}>{name}</p>}
+            {option == 'logwithaccount' && (
+                <div className={cx('login-button')}>
+                    <div className={cx('icon')}>
+                        <FontAwesomeIcon icon={faUser} />
+                    </div>
+                    <p>{name}</p>
+                </div>
+            )}
         </div>
     );
 }

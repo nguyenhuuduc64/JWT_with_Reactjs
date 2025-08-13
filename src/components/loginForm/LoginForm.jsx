@@ -19,9 +19,6 @@ function LoginForm() {
                     <LoginOption name="Đăng nhập bằng tài khoản Google" option="logwithgoogle" />
 
                     <div className={cx('loggin-btn')}>
-                        <div className={cx('icon')}>
-                            <FontAwesomeIcon icon={faUser} />
-                        </div>
                         <LoginOption
                             name="Đăng nhập bằng tài khoản/Mật khẩu"
                             option="logwithaccount"

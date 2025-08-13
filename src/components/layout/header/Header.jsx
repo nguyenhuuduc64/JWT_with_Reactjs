@@ -40,10 +40,15 @@ function Header() {
 
         fetchUser();
     }, []);
-
+    if (user) {
+        console.log('User:', user);
+    }
     return (
         <header className={cx('wrapper')}>
-            <div className={cx('logo')}></div>
+            <div className={cx('logo')}>
+                <img src="/assets/img/logo.png" alt="Logo" />
+                <p>Học toán để ứng dụng</p>
+            </div>
             <div className={cx('auth-btns')}>
                 {user ? (
                     <p className={cx('user-name')}>{user.fullname}</p>

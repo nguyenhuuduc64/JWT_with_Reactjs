@@ -1,6 +1,7 @@
 .wrapper {
     height: var(--header-height);
     width: 100vw;
+    padding: 0 20px;
     background-color: white;
     border-bottom: 1px solid #e5e7eb;
     position: absolute;
@@ -19,4 +20,23 @@
 .user-name{
     margin: 0 30px 0 0;
     font-weight: bold;
+}
+
+
+.logo{
+    display: flex;
+    align-items: center;
+    &> p{
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 10px;
+        color: black;
+        list-style: none;
+        line-height: normal;
+        margin-bottom: 0;
+    }
+}
+.logo>img{
+    width: 60px;
+    height: 60px;
 }

@@ -8,7 +8,18 @@ import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideForm } from '../../product/formSlice.jsx';
 const cx = classNames.bind(styles);
-function Form({ fieldsInput = [], fieldsOutput, isSubmit = true, formName, children, submitName, api }) {
+function Form({
+    fieldsInput = [],
+    fieldsOutput,
+    isSubmit = true,
+    formName,
+    children,
+    submitName,
+    api,
+    method,
+    isShowValue = false,
+    course,
+}) {
     const { id, setId } = useContext(Context);
     const [formData, setFormData] = useState({});
     const dispatch = useDispatch();
@@ -42,7 +53,22 @@ function Form({ fieldsInput = [], fieldsOutput, isSubmit = true, formName, child
     const keysList = fieldsOutput;
     const handleSubmitForm = (e) => {
         e.preventDefault();
-        console.log('formData', formData);
+        if (method === 'put') {
+            axios
+                .put(api, {
+                    ...formData,
+                    teacherId: id ? id : '',
+                })
+                .then((res) => {
+                    console.log('Cập nhật khóa học thành công:', res.data);
+                })
+                .catch((err) => {
+                    console.error('Lỗi khi cập nhật khóa học:', err);
+                    alert('Cập nhật khóa học thất bại');
+                });
+            window.location.reload();
+            return;
+        }
         axios
             .post(api, {
                 ...formData,
@@ -79,7 +105,7 @@ function Form({ fieldsInput = [], fieldsOutput, isSubmit = true, formName, child
                                 autoComplete={keysList[index]}
                                 placeholder={`Nhập ${name}`}
                                 onChange={handleInputChange}
-                                value={formData[keysList[index]] || ''}
+                                value={formData[keysList[index]] ?? (isShowValue ? course[fieldsOutput[index]] : '')}
                             />
                         </div>
                     );

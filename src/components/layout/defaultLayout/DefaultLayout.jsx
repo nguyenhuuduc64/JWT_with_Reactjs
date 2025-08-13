@@ -11,7 +11,7 @@ function DefautLayout({ children }) {
             <Header />
             <Main>
                 <Sidebar />
-                {children}
+                <div style={{ width: '100%' }}>{children}</div>
             </Main>
         </div>
     );

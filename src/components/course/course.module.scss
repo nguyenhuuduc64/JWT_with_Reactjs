@@ -1,6 +1,6 @@
 .wrapper{
-    width: 350px;
-    height: 300px;
+    width: 320px;
+    height: 260px;
     margin: 10px;
     border: 1px solid #ccc;
     border-radius: 20px;
@@ -36,7 +36,6 @@
 .descripion{
     font-size: 16px;
     color: var(--descripion-color);
-    margin-bottom: 20px;
 }
 
 
@@ -44,6 +43,7 @@
     width: 100%;
     display: flex;
     justify-content: flex-end;
+
 }
 .icon{
     padding-right: 25px;
