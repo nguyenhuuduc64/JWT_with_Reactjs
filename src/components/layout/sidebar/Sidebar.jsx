@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { showForm } from '../../../product/formSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faPlus, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Sidebar() {
@@ -27,8 +28,7 @@ function Sidebar() {
                 </div>
                 <div className={cx('sidebar-item')}>
                     <FontAwesomeIcon icon={faCalendar} className={cx('icon')} />
-
-                    <a onClick={handleSubmit}>Theo dõi</a>
+                    <Link to="/follow">Theo dõi </Link>
                 </div>
             </ul>
 
@@ -38,6 +38,7 @@ function Sidebar() {
                 formName="Tạo khóa học mới"
                 submitName={'Tạo khóa học'}
                 isSubmit={true}
+                method="post"
                 api="http://localhost:5000/course/create"
             />
         </div>

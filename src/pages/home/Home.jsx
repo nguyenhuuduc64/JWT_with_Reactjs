@@ -15,13 +15,19 @@ function Home() {
     const [courses, setCourses] = useState([]);
     useEffect(() => {
         if (!id) {
+            return;
         }
         const fetchCourses = async () => {
             try {
                 if (!id) {
                     return;
                 }
-                const response = await axios.get(`${VITE_BE_API_BASE_URL}/course/user/${id}`);
+                const response = await axios.get(`${VITE_BE_API_BASE_URL}/course/user/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                });
+
                 const data = response.data;
                 setCourses(data);
             } catch (error) {

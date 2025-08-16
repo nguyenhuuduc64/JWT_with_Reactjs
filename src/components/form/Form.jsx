@@ -48,8 +48,6 @@ function Form({
             [e.target.name]: e.target.value,
         });
     };
-
-    const handleCloseForm = () => {};
     const keysList = fieldsOutput;
     const handleSubmitForm = (e) => {
         e.preventDefault();
@@ -69,20 +67,22 @@ function Form({
             window.location.reload();
             return;
         }
-        axios
-            .post(api, {
-                ...formData,
-                teacherId: id ? id : '',
-            })
-            .then((res) => {
-                if (res.data.token) {
-                    localStorage.setItem('token', res.data.token);
-                    window.location.reload();
-                } else {
-                    console.log('res', res);
-                }
-            })
-            .catch(() => alert('Đăng ký thất bại'));
+        if (method == 'post') {
+            axios
+                .post(api, {
+                    ...formData,
+                    teacherId: id ? id : '',
+                })
+                .then((res) => {
+                    if (res.data.token) {
+                        localStorage.setItem('token', res.data.token);
+                        window.location.reload();
+                    } else {
+                        console.log('res', res);
+                    }
+                })
+                .catch(() => alert('Đăng ký thất bại'));
+        }
     };
     if (!isVisible) return null;
 
@@ -96,17 +96,27 @@ function Form({
                             <label htmlFor={fieldsOutput[index]} className={cx('label')}>
                                 {name}
                             </label>
-                            <input
-                                type="text"
-                                id={keysList[index]}
-                                name={keysList[index]}
-                                className={cx('input')}
-                                required
-                                autoComplete={keysList[index]}
-                                placeholder={`Nhập ${name}`}
-                                onChange={handleInputChange}
-                                value={formData[keysList[index]] ?? (isShowValue ? course[fieldsOutput[index]] : '')}
-                            />
+                            {keysList[index] === 'role' ? (
+                                <select onChange={handleInputChange} className={cx('input')} name="role" id="role">
+                                    <option value="">Chọn vai trò</option>
+                                    <option value="teacher">Giáo viên</option>
+                                    <option value="student">Học sinh</option>
+                                </select>
+                            ) : (
+                                <input
+                                    type="text"
+                                    id={keysList[index]}
+                                    name={keysList[index]}
+                                    className={cx('input')}
+                                    required
+                                    autoComplete={keysList[index]}
+                                    placeholder={`Nhập ${name}`}
+                                    onChange={handleInputChange}
+                                    value={
+                                        formData[keysList[index]] ?? (isShowValue ? course[fieldsOutput[index]] : '')
+                                    }
+                                />
+                            )}
                         </div>
                     );
                 })}

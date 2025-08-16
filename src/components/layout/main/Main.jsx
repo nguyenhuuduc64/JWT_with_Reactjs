@@ -5,7 +5,7 @@ import GoogleLoginForm from '../../googleLoginForm/GoogleLoginForm';
 import SignupForm from '../../signupForm/SignupForm';
 import LoginAcountForm from '../../login/LoginAcountForm';
 function Main({ children }) {
-    return <div style={{ display: 'flex' }}>{children}</div>;
+    return <div style={{ display: 'flex', marginTop: 'calc(var(--header-height) + 20px)' }}>{children}</div>;
 }
 
 export default Main;

@@ -20,6 +20,10 @@ function CourseCard({ course }) {
             label: 'Xóa khóa học',
             action: 'post',
         },
+        {
+            label: 'Theo dõi khóa học',
+            action: '',
+        },
     ];
     useEffect(() => {
         function handleClickOutside(e) {

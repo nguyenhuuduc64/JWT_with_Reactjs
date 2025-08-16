@@ -30,6 +30,7 @@ function LoginAcountForm() {
             fieldsInput={['username', 'password']}
             fieldsOutput={['username', 'password']}
             isSubmit={true}
+            method="post"
             submitName="Đăng nhập"
         ></Form>
     );

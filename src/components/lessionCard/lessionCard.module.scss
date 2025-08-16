@@ -1,0 +1,15 @@
+
+
+.lesson{
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+.lesson:hover{
+    background-color: var(--hover-color-primary);
+    cursor: pointer;
+}
+
+.name{
+    font-weight: bold;
+}

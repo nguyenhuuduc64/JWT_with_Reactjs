@@ -30,9 +30,10 @@ function SignupForm() {
         <Form
             className={cx('wrapper')}
             formName={'Đăng ký tài khoản'}
-            fieldsInput={['fullname', 'username', 'email', 'password']}
+            fieldsInput={['fullname', 'username', 'email', 'password', 'role']}
             fieldsOutput={['fullname', 'username', 'email', 'password', 'role']}
             isSubmit={true}
+            method={'post'}
             submitName="Đăng ký tài khoản"
             api={'http://localhost:5000/auth/create'}
         ></Form>

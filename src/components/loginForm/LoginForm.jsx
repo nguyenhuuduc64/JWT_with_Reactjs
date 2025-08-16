@@ -37,6 +37,7 @@ function LoginForm() {
                     fieldsInput={['username', 'password']}
                     fieldsOutput={['username', 'password']}
                     isSubmit={true}
+                    method={'post'}
                     submitName="Đăng nhập"
                     api="http://localhost:5000/auth/login"
                 />

@@ -1,0 +1,19 @@
+.course-list, .lessons-list{
+    display: flex;
+    flex-direction: column;
+}
+
+.add-lession{
+    padding-bottom: 20px;
+}
+h3{
+    font-size: 1.5rem;
+    font-weight: bolder;
+    margin-bottom: 20px;
+}
+
+.student-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}

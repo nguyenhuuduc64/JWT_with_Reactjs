@@ -11,10 +11,10 @@ function Menu({ menuItems, course }) {
     const VITE_BE_API_BASE_URL = import.meta.env.VITE_BE_API_BASE_URL;
     const inputFields = ['Tên khóa học', 'Mô tả', 'Lớp', 'Môn học'];
     const outputFields = ['title', 'description', 'grade', 'subject', 'teacherId'];
+    const [updateStateForm, setUpdateStateForm] = React.useState(false);
     const dispatch = useDispatch();
     const handleClick = (label) => {
         if (label === 'Xóa khóa học') {
-            console.log('Xóa khóa học:', course._id);
             axios
                 .delete(`${VITE_BE_API_BASE_URL}/course/delete/${course._id}`)
                 .then((res) => {
@@ -29,6 +29,15 @@ function Menu({ menuItems, course }) {
         if (label === 'Chỉnh sửa khóa học') {
             dispatch(showForm('Chỉnh sửa khóa học'));
             console.log('Chỉnh sửa khóa học:', course);
+            setUpdateStateForm(true);
+        }
+        if (label === 'Theo dõi khóa học') {
+            window.location.href = `/follow/${course._id}`;
+            // Implement follow course logic here
+        }
+        if (label == 'Đăng xuất') {
+            localStorage.removeItem('token');
+            window.location.reload();
         }
     };
 
@@ -41,15 +50,17 @@ function Menu({ menuItems, course }) {
                     </li>
                 ))}
             </ul>
-            <Form
-                formName={'Chỉnh sửa khóa học'}
-                fieldsInput={inputFields}
-                fieldsOutput={outputFields}
-                api={`${VITE_BE_API_BASE_URL}/course/update/${course._id}`}
-                method="put"
-                isShowValue={true}
-                course={course}
-            />
+            {updateStateForm && (
+                <Form
+                    formName={'Chỉnh sửa khóa học'}
+                    fieldsInput={inputFields}
+                    fieldsOutput={outputFields}
+                    api={`${VITE_BE_API_BASE_URL}/course/update/${course._id}`}
+                    method="put"
+                    isShowValue={true}
+                    course={course}
+                />
+            )}
         </div>
     );
 }
