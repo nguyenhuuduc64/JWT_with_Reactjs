@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import Form from '../form/Form.jsx';
 import { showForm } from '../../product/formSlice.jsx';
+import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function Menu({ menuItems, course }) {
@@ -32,7 +33,6 @@ function Menu({ menuItems, course }) {
             setUpdateStateForm(true);
         }
         if (label === 'Theo dõi khóa học') {
-            window.location.href = `/follow/${course._id}`;
             // Implement follow course logic here
         }
         if (label == 'Đăng xuất') {
@@ -44,12 +44,21 @@ function Menu({ menuItems, course }) {
     return (
         <div className={cx('wrapper')}>
             <ul className={cx('menu-list')}>
-                {menuItems.map((item, index) => (
-                    <li key={index} className={cx('menu-item')} onClick={() => handleClick(item.label)}>
-                        <span className={cx('item-label')}>{item.label}</span>
-                    </li>
-                ))}
+                {menuItems.map((item, index) => {
+                    return (
+                        <li key={index} className={cx('menu-item')} onClick={() => handleClick(item.label)}>
+                            {item.label == 'Theo dõi khóa học' ? (
+                                <Link to={`/follow/${course._id}`} className={cx('link-none')}>
+                                    {item.label}
+                                </Link>
+                            ) : (
+                                <span className={cx('item-label')}>{item.label}</span>
+                            )}
+                        </li>
+                    );
+                })}
             </ul>
+
             {updateStateForm && (
                 <Form
                     formName={'Chỉnh sửa khóa học'}

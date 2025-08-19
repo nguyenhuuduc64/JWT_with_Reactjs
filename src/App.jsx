@@ -13,26 +13,6 @@ import store from './store/store.jsx';
 import axios from 'axios';
 function App() {
     const [id, setId] = useState();
-    {
-        /*useEffect(() => {
-        const getTeacherId = async () => {
-            const token = localStorage.getItem('token');
-            if (!token) return;
-            try {
-                const res = await fetch('http://localhost:5000/auth/me', {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-                const data = await res.json();
-                setId(data._id);
-            } catch (err) {
-                console.error('Lỗi lấy thông tin người dùng:', err);
-            }
-        };
-        getTeacherId();
-    }, []);*/
-    }
 
     useEffect(() => {
         const getTeacherId = async () => {

@@ -43,3 +43,12 @@
 .item-label {
   display: block;
 }
+
+.link-none{
+    color: #555;
+    text-decoration: none;
+    &:hover{
+      color: #555;
+      text-decoration: none;
+    }
+}

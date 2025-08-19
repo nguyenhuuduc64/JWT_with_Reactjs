@@ -1,22 +1,25 @@
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import { Context } from '../../App';
-import CourseCard from '../../components/course/Course';
+import { Context } from '../../App.jsx';
+import CourseCard from '../../components/course/Course.jsx';
 import classNames from 'classnames/bind';
 import styles from './follow.module.scss';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import StudentCard from '../../components/studentCard/StudentCard.jsx';
 import LessionCard from '../../components/lessionCard/LessionCard.jsx';
-import Button from '../../components/button/Button';
-import Form from '../../components/form/Form';
+import Button from '../../components/button/Button.jsx';
+import Form from '../../components/form/Form.jsx';
 import { useDispatch } from 'react-redux';
 import { showForm } from '../../product/formSlice.jsx';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleDoubleLeft, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function CourseDetail() {
     const [studentsList, setStudentsList] = useState([]);
     const [lessons, setLessons] = useState([]);
-    const [formSubmitAction, setFormSubmitAction] = useState(false);
+    const [courseName, setCourseName] = useState();
     const { id } = useContext(Context);
     const courseId = useParams().courseId;
     const addLessionApi = `${import.meta.env.VITE_BE_API_BASE_URL}/course/${courseId}`;
@@ -25,7 +28,11 @@ function CourseDetail() {
 
     useEffect(() => {
         //hàm lấy thông tin khóa học
-        axios.get('');
+        axios
+            .get(`${import.meta.env.VITE_BE_API_BASE_URL}/course/${courseId}`)
+            .then((res) => setCourseName(res.data.title))
+            .catch((err) => console.error('Error fetching followings:', err));
+
         // ham fetch danh sách hoc sinh
         axios
             .get(`${import.meta.env.VITE_BE_API_BASE_URL}/me/follow/${courseId}`)
@@ -41,7 +48,12 @@ function CourseDetail() {
 
     return (
         <div className="follow-page">
-            <h3>{}</h3>
+            <h3>
+                <Link to="/">
+                    <FontAwesomeIcon icon={faAngleLeft} style={{ paddingRight: '13px' }} />
+                </Link>
+                {courseName}
+            </h3>
             <div className={cx('course-list')}>
                 <h3>Danh sách học viên theo dõi khóa học</h3>
                 <div className={cx('student-list')}>
