@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { hideForm } from '../../product/formSlice.jsx';
+import { supabase } from '../../config/supabase.js';
 const cx = classNames.bind(styles);
 function Form({
     fieldsInput = [],
@@ -24,7 +25,7 @@ function Form({
     const [formData, setFormData] = useState({});
     const dispatch = useDispatch();
     const isVisible = useSelector((state) => state.forms.visibleForms[formName] || false);
-
+    const [selectedFile, setSelectedFile] = useState(null);
     useEffect(() => {
         const getTeacherId = async () => {
             const token = localStorage.getItem('token');
@@ -43,47 +44,74 @@ function Form({
     }, []);
 
     const handleInputChange = (e) => {
+        const { name, value, files } = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value,
+            [name]: files ? files[0] : value,
         });
     };
     const keysList = fieldsOutput;
-    const handleSubmitForm = (e) => {
+    const handleSubmitForm = async (e) => {
         e.preventDefault();
-        if (method === 'put') {
-            axios
-                .put(api, {
+
+        try {
+            let fileUrl = null;
+
+            // Nếu có file trong formData thì upload lên supabase
+            if (formData.file) {
+                const file = formData.file;
+                const { data, error } = await supabase.storage
+                    .from('documents') // bucket name
+                    .upload(`files/${Date.now()}_${file.name}`, file);
+
+                if (error) {
+                    console.error('Upload error:', error);
+                    alert('Upload file thất bại');
+                    return;
+                }
+
+                // Lấy URL public của file
+                const { data: publicUrl } = supabase.storage.from('documents').getPublicUrl(data.path);
+
+                fileUrl = publicUrl.publicUrl;
+            }
+
+            // Gửi API backend với dữ liệu + link file
+            if (method === 'post') {
+                const payload = {
                     ...formData,
-                    teacherId: id ? id : '',
-                })
-                .then((res) => {
-                    console.log('Cập nhật khóa học thành công:', res.data);
-                })
-                .catch((err) => {
-                    console.error('Lỗi khi cập nhật khóa học:', err);
-                    alert('Cập nhật khóa học thất bại');
-                });
-            window.location.reload();
-            return;
-        }
-        if (method == 'post') {
-            axios
-                .post(api, {
+                    teacherId: id || '',
+                };
+                console.log('fileUrl', fileUrl);
+                if (fileUrl) {
+                    payload.fileUrl = fileUrl; // chỉ thêm khi có link file
+                }
+
+                const res = await axios.post(api, payload);
+                console.log(res.data);
+                if (res.data.token) localStorage.setItem('token', res.data.token);
+            } else if (method === 'put') {
+                const payload = {
                     ...formData,
-                    teacherId: id ? id : '',
-                })
-                .then((res) => {
-                    if (res.data.token) {
-                        localStorage.setItem('token', res.data.token);
-                        window.location.reload();
-                    } else {
-                        console.log('res', res);
-                    }
-                })
-                .catch(() => alert('Đăng ký thất bại'));
+                    teacherId: id || '',
+                };
+
+                if (fileUrl) {
+                    payload.file = fileUrl; // chỉ thêm khi có link file
+                }
+
+                const res = await axios.put(api, payload);
+                console.log(res.data);
+            }
+
+            //alert('Thành công!');
+            //window.location.reload();
+        } catch (err) {
+            console.error('Error:', err);
+            alert('Thất bại!');
         }
     };
+
     if (!isVisible) return null;
 
     return (
@@ -96,12 +124,21 @@ function Form({
                             <label htmlFor={fieldsOutput[index]} className={cx('label')}>
                                 {name}
                             </label>
+
                             {keysList[index] === 'role' ? (
                                 <select onChange={handleInputChange} className={cx('input')} name="role" id="role">
                                     <option value="">Chọn vai trò</option>
                                     <option value="teacher">Giáo viên</option>
                                     <option value="student">Học sinh</option>
                                 </select>
+                            ) : keysList[index] === 'file' ? (
+                                <input
+                                    type="file"
+                                    id={keysList[index]}
+                                    name={keysList[index]}
+                                    className={cx('input')}
+                                    onChange={handleInputChange}
+                                />
                             ) : (
                                 <input
                                     type="text"

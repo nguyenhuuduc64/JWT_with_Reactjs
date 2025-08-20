@@ -14,7 +14,7 @@ function CourseCard({ course }) {
     const menuItems = [
         {
             label: 'Chỉnh sửa khóa học',
-            action: 'get',
+            action: 'put',
         },
         {
             label: 'Xóa khóa học',

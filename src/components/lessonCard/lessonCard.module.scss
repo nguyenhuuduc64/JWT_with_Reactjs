@@ -1,0 +1,67 @@
+.lesson-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.lesson-header {
+    padding: 16px;
+    background: #f9f9f9;
+    transition: background-color 0.2s;
+
+    &:hover {
+        background: #f0f0f0;
+    }
+}
+
+.name {
+    font-weight: bold;
+    margin: 0 0 8px 0;
+}
+
+.file-name {
+    margin: 0;
+    color: #666;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toggle-icon {
+    font-size: 12px;
+    color: #999;
+}
+
+.embed-wrapper {
+    border-top: 1px solid #eee;
+}
+
+.embed-container {
+    padding: 16px;
+    background: #fff;
+}
+
+.embed-image {
+    max-width: 100%;
+    max-height: 400px;
+    display: block;
+    margin: 0 auto;
+}
+
+.download-link {
+    color: #007bff;
+    text-decoration: none;
+    display: inline-block;
+    margin-top: 8px;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+/* Responsive cho iframe */
+.embed-container iframe {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}

@@ -6,7 +6,7 @@ import classNames from 'classnames/bind';
 import styles from './follow.module.scss';
 import { Link, useParams } from 'react-router-dom';
 import StudentCard from '../../components/studentCard/StudentCard.jsx';
-import LessionCard from '../../components/lessionCard/LessionCard.jsx';
+import LessonCard from '../../components/lessonCard/LessonCard.jsx';
 import Button from '../../components/button/Button.jsx';
 import Form from '../../components/form/Form.jsx';
 import { useDispatch } from 'react-redux';
@@ -22,7 +22,7 @@ function CourseDetail() {
     const [courseName, setCourseName] = useState();
     const { id } = useContext(Context);
     const courseId = useParams().courseId;
-    const addLessionApi = `${import.meta.env.VITE_BE_API_BASE_URL}/course/${courseId}`;
+    const addLessionApi = `${import.meta.env.VITE_BE_API_BASE_URL}/lesson/${courseId}`;
     const getLessionsApi = `${import.meta.env.VITE_BE_API_BASE_URL}/course/${courseId}/lessons`;
     const dispatch = useDispatch();
 
@@ -64,19 +64,19 @@ function CourseDetail() {
                 <h3>Danh sách các bài học</h3>
                 <div className={cx('courses-list')}>
                     <div className={cx('add-lession')}>
-                        <Button name="Thêm bài học" onClick={() => dispatch(showForm('Thêm khóa học mới'))} />
+                        <Button name="Thêm bài học" onClick={() => dispatch(showForm('Thêm bài học mới'))} />
                     </div>
                     <div className={cx('lessons-list')}>
                         {lessons.map((lesson) => (
-                            <LessionCard key={lesson._id} name={lesson.title} />
+                            <LessonCard key={lesson._id} lesson={lesson} />
                         ))}
                     </div>
                 </div>
             </div>
             <Form
-                fieldsInput={['title']}
-                fieldsOutput={['title']}
-                formName="Thêm khóa học mới"
+                fieldsInput={['title', 'Chọn đề bài']}
+                fieldsOutput={['title', 'file']}
+                formName="Thêm bài học mới"
                 method="post"
                 api={addLessionApi}
             />

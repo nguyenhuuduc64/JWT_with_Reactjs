@@ -6,11 +6,7 @@ import SignupForm from '../../signupForm/SignupForm';
 import LoginAcountForm from '../../login/LoginAcountForm';
 import Chat from '../../chat/Chat';
 function Main({ children }) {
-    return (
-        <div style={{ display: 'flex', marginTop: '20px' }}>
-            {children} <Chat></Chat>
-        </div>
-    );
+    return <div style={{ display: 'flex', marginTop: '20px' }}>{children}</div>;
 }
 
 export default Main;
