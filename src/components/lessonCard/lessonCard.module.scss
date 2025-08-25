@@ -9,15 +9,21 @@
     padding: 16px;
     background: #f9f9f9;
     transition: background-color 0.2s;
+    display: flex;
+    justify-content: space-between;
 
     &:hover {
         background: #f0f0f0;
     }
 }
 
+.lesson-main{
+    display: flex;
+    align-items: center;
+}
 .name {
     font-weight: bold;
-    margin: 0 0 8px 0;
+    padding-left: 10px;
 }
 
 .file-name {

@@ -20,12 +20,14 @@ function Form({
     method,
     isShowValue = false,
     course,
+    lesson = null,
 }) {
     const { id, setId } = useContext(Context);
     const [formData, setFormData] = useState({});
     const dispatch = useDispatch();
     const isVisible = useSelector((state) => state.forms.visibleForms[formName] || false);
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [filePath, setFilePath] = useState('');
+
     useEffect(() => {
         const getTeacherId = async () => {
             const token = localStorage.getItem('token');
@@ -56,10 +58,12 @@ function Form({
 
         try {
             let fileUrl = null;
-
+            let fileName = null;
+            console.log('try truoc');
             // Nếu có file trong formData thì upload lên supabase
             if (formData.file) {
                 const file = formData.file;
+                const path = `${Date.now()}_${file.name}`;
                 const { data, error } = await supabase.storage
                     .from('documents') // bucket name
                     .upload(`files/${Date.now()}_${file.name}`, file);
@@ -74,34 +78,24 @@ function Form({
                 const { data: publicUrl } = supabase.storage.from('documents').getPublicUrl(data.path);
 
                 fileUrl = publicUrl.publicUrl;
+                fileName = path;
             }
-
+            const payload = {
+                ...formData,
+                teacherId: id || '',
+            };
+            if (fileUrl) {
+                payload.fileUrl = fileUrl; // chỉ thêm khi có link file
+                payload.fileName = fileName;
+            }
             // Gửi API backend với dữ liệu + link file
             if (method === 'post') {
-                const payload = {
-                    ...formData,
-                    teacherId: id || '',
-                };
-                console.log('fileUrl', fileUrl);
-                if (fileUrl) {
-                    payload.fileUrl = fileUrl; // chỉ thêm khi có link file
-                }
-
                 const res = await axios.post(api, payload);
-                console.log(res.data);
                 if (res.data.token) localStorage.setItem('token', res.data.token);
+                window.location.reload();
             } else if (method === 'put') {
-                const payload = {
-                    ...formData,
-                    teacherId: id || '',
-                };
-
-                if (fileUrl) {
-                    payload.file = fileUrl; // chỉ thêm khi có link file
-                }
-
                 const res = await axios.put(api, payload);
-                console.log(res.data);
+                window.location.reload();
             }
 
             //alert('Thành công!');

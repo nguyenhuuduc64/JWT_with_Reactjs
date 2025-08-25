@@ -9,20 +9,22 @@ const cx = classNames.bind(styles);
 
 function CourseCard({ course }) {
     const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+    const VITE_BE_API_BASE_URL = import.meta.env.VITE_BE_API_BASE_URL;
     const [menuState, setMenuState] = useState(false);
     const menuRef = useRef(null);
     const menuItems = [
         {
             label: 'Chỉnh sửa khóa học',
-            action: 'put',
+            method: 'put',
         },
         {
             label: 'Xóa khóa học',
-            action: 'post',
+            method: 'delete',
+            api: `${VITE_BE_API_BASE_URL}/course/delete/${course._id}`,
         },
         {
             label: 'Theo dõi khóa học',
-            action: '',
+            method: '',
         },
     ];
     useEffect(() => {

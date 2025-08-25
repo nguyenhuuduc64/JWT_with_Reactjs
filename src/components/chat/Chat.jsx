@@ -39,7 +39,6 @@ function Chat() {
                 textContent += `\n--- Trang ${i} ---\n` + pageText;
             }
             setTextContentForChat(textContent);
-            console.log('Nội dung PDF:', textContent);
         };
         reader.readAsArrayBuffer(file);
     };

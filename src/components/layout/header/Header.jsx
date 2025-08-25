@@ -21,7 +21,6 @@ function Header() {
         const fetchUser = async () => {
             const token = localStorage.getItem('token');
             if (!token) return;
-
             try {
                 const res = await fetch('http://localhost:5000/auth/me', {
                     headers: {
@@ -54,7 +53,6 @@ function Header() {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
-    console.log('atate', menuState);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('logo')}>

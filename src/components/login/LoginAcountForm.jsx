@@ -16,7 +16,6 @@ function LoginAcountForm() {
                 username,
                 password,
             });
-            console.log('Login successful:', res.data);
             localStorage.setItem('token', res.data.token);
             alert('Đăng nhập thành công!');
         } catch (error) {

@@ -7,7 +7,6 @@ const formSlice = createSlice({
     },
     reducers: {
         showForm: (state, action) => {
-            console.log('showForm action payload:', action.payload);
             state.visibleForms[action.payload] = true;
         },
         hideForm: (state, action) => {

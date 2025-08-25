@@ -22,9 +22,7 @@ function LoginOption({ name, option, onClick }) {
                     onSuccess={async (credentialResponse) => {
                         const token = credentialResponse.credential;
                         try {
-                            console.log('Đang giải mã token...');
                             const res = await axios.post('http://localhost:5000/auth/google', { token });
-                            console.log('Đăng nhập thành công:', res.data);
                             localStorage.setItem('token', res.data.token);
                             window.location.reload();
                         } catch (err) {
