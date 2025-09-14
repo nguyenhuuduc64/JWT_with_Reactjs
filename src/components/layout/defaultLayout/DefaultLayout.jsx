@@ -5,12 +5,12 @@ import Header from './../header/Header';
 import styles from './defaultLayout.module.scss';
 import classNames from 'classnames/bind';
 const cx = classNames.bind(styles);
-function DefautLayout({ children }) {
+function DefautLayout({ children, role }) {
     return (
         <div>
             <Header />
             <Main>
-                <Sidebar />
+                <Sidebar role={role} />
                 <div style={{ width: '100%' }}>{children}</div>
             </Main>
         </div>

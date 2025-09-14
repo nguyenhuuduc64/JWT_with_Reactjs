@@ -5,16 +5,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faFile } from '@fortawesome/free-solid-svg-icons';
 import Menu from '../menu/Menu';
 import Form from '../form/Form';
+import AnswerForm from '../aswerForm/AnswerForm';
+import ResultForm from '../resultForm/ResultForm';
 
 const cx = classNames.bind(styles);
 
-function LessonCard({ lesson }) {
+function LessonCard({ lesson, role }) {
+    console.log(lesson);
     const VITE_BE_API_BASE_URL = import.meta.env.VITE_BE_API_BASE_URL;
     const [menuState, setMenuState] = useState(false);
     const menuRef = useRef(null);
     const [showEmbed, setShowEmbed] = useState(false);
     const updateLessonApi = `${VITE_BE_API_BASE_URL}/lesson/${lesson._id}`;
     const deleteLessonApi = `${VITE_BE_API_BASE_URL}/lesson/${lesson._id}`;
+    console.log('role in lesson card', role);
     useEffect(() => {
         function handleClickOutside(e) {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -27,32 +31,19 @@ function LessonCard({ lesson }) {
         };
     }, []);
 
-    const getFileNameFromUrl = (url) => {
-        if (!url) return 'No file attached';
-        return url.split('/').pop().replace(/%20/g, ' ');
-    };
-
     const getFileExtension = (url) => {
         if (!url) return '';
         return url.split('.').pop().toLowerCase();
     };
 
-    const renderEmbed = () => {
-        if (!lesson.fileUrl) return null;
-
+    const renderEmbedPDF = () => {
         const fileExtension = getFileExtension(lesson.fileUrl);
 
         switch (fileExtension) {
             case 'pdf':
                 return (
-                    <div className={cx('embed-container')}>
-                        <iframe
-                            src={lesson.fileUrl}
-                            width="100%"
-                            height="500px"
-                            frameBorder="0"
-                            title={`PDF Viewer - ${lesson.title}`}
-                        >
+                    <div className={cx('embed-container col-8')}>
+                        <iframe src={lesson.fileUrl} width="100%" height="500px" title={`PDF Viewer - ${lesson.title}`}>
                             Trình duyệt của bạn không hỗ trợ iframe.
                             <a href={lesson.fileUrl} target="_blank" rel="noopener noreferrer">
                                 Tải file PDF về
@@ -65,14 +56,6 @@ function LessonCard({ lesson }) {
                 return (
                     <div className={cx('embed-container')}>
                         <p>Không thể xem trực tiếp file {fileExtension}</p>
-                        <a
-                            href={lesson.fileUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className={cx('download-link')}
-                        >
-                            ⬇️ Tải file về
-                        </a>
                     </div>
                 );
         }
@@ -90,19 +73,34 @@ function LessonCard({ lesson }) {
             api: deleteLessonApi,
             method: 'delete',
         },
+        {
+            label: 'Thêm đáp án',
+        },
     ];
+
+    const renderEmbedMul = () => {
+        console.log(lesson.questions);
+        return (
+            <div className={cx('answer-form', 'col-8')}>
+                <AnswerForm questions={lesson.questions} />
+            </div>
+        );
+    };
+
     return (
-        <div className={cx('lesson-card')}>
+        <div className={cx('lesson-card')} key={lesson._id}>
             <div className={cx('lesson-header')} onClick={() => setShowEmbed(!showEmbed)} style={{ cursor: 'pointer' }}>
                 <div className={cx('lesson-main')}>
                     <FontAwesomeIcon icon={faFile} />
                     <div className={cx('name')}>{lesson.title}</div>
                 </div>
-                <FontAwesomeIcon
-                    icon={faEllipsis}
-                    className={cx('icon')}
-                    onClick={() => setMenuState((prev) => !prev)}
-                />
+                {role == 'teacher' && (
+                    <FontAwesomeIcon
+                        icon={faEllipsis}
+                        className={cx('icon')}
+                        onClick={() => setMenuState((prev) => !prev)}
+                    />
+                )}
             </div>
             <div ref={menuRef} className={cx('lesson-menu')}>
                 {menuState && <Menu menuItems={menuItems} lesson={lesson} />}
@@ -115,6 +113,11 @@ function LessonCard({ lesson }) {
                 lesson={lesson}
                 api={updateLessonApi}
             />
+            <div className={cx('lesson-body')}>
+                {showEmbed && lesson.type == 'pdf' && renderEmbedPDF()}
+                {showEmbed && lesson.type == 'multiple' && renderEmbedMul()}
+                {showEmbed && <ResultForm lesson={lesson} />}
+            </div>
         </div>
     );
 }

@@ -1,0 +1,23 @@
+.chooses-wrapper{
+    display: flex;
+    flex-direction: column;
+}
+
+
+.form-result{
+    display: flex;
+    flex-direction: row;
+}
+.answer{
+    width: 30px;
+    height: 30px;
+    border-radius: 150px;
+    line-height: 30px;
+    text-align: center;
+    border: 1px solid grey;
+    margin: 5px 10px;
+}
+
+.question-img{
+    max-width: 100%;
+}

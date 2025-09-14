@@ -7,12 +7,16 @@ import Course from '../../components/course/Course';
 import { Context } from '../../App';
 import CourseCard from '../../components/course/Course';
 import { height, width } from '@fortawesome/free-solid-svg-icons/fa0';
+import { useSelector } from 'react-redux';
 const VITE_BE_API_BASE_URL = import.meta.env.VITE_BE_API_BASE_URL;
 const cx = classNames.bind(styles);
 
 function Home() {
     const { id } = useContext(Context);
     const [courses, setCourses] = useState([]);
+    const [courseJoined, setCourseJoined] = useState([]);
+    const { isUser } = useContext(Context);
+    const courseResults = useSelector((state) => state.search.results);
     useEffect(() => {
         if (!id) {
             return;
@@ -35,6 +39,16 @@ function Home() {
             }
         };
         fetchCourses();
+        const getCourseJoined = () => {
+            axios
+                .get(`${VITE_BE_API_BASE_URL}/me/courses-joined/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`,
+                    },
+                })
+                .then((res) => setCourseJoined(res.data));
+        };
+        getCourseJoined();
     }, [id]);
     return (
         <div className={cx('wrapper')}>
@@ -105,12 +119,33 @@ function Home() {
                 </div>
             </div>
             <div className={cx('created-courses')}>
-                <h3>Các khóa học đã tạo</h3>
-                <div className={cx('course-list')}>
-                    {courses.map((course) => (
-                        <CourseCard key={course._id} course={course} />
-                    ))}
-                </div>
+                {isUser == 'teacher' && (
+                    <div>
+                        <h3>Các khóa học đã tạo</h3>
+                        <div className={cx('course-list')}>
+                            {courses.map((course) => (
+                                <CourseCard key={course._id} course={course} />
+                            ))}
+                        </div>
+                    </div>
+                )}
+                {isUser == 'student' && (
+                    <div>
+                        <div className={cx('course-list')}>
+                            {courseResults.map((course) => {
+                                let isJoined = false;
+                                if (courseJoined.some((courseItem) => courseItem._id === course._id)) isJoined = true;
+                                return <CourseCard key={course._id} course={course} isJoined={isJoined} />;
+                            })}
+                        </div>
+                        <h3>Các khóa học đã tham gia</h3>
+                        <div className={cx('course-list')}>
+                            {courseJoined.map((course) => (
+                                <CourseCard key={course._id} course={course} isJoined={true} />
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

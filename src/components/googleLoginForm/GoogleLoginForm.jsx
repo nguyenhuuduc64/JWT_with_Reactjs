@@ -9,7 +9,6 @@ function GoogleLoginForm() {
             onSuccess={(credentialResponse) => {
                 const decoded = jwtDecode(credentialResponse.credential);
 
-                console.log('Thông tin người dùng:', decoded);
                 // Gửi token này về backend để xác thực (nếu có backend)
             }}
             onError={() => {

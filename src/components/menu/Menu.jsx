@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import styles from './menu.module.scss';
 import classNames from 'classnames/bind';
 import axios from 'axios';
@@ -6,12 +6,12 @@ import { useDispatch } from 'react-redux';
 import Form from '../form/Form.jsx';
 import { showForm } from '../../product/formSlice.jsx';
 import { Link } from 'react-router-dom';
+import Chat from '../chat/Chat.jsx';
 const cx = classNames.bind(styles);
 
 function Menu({ menuItems, course, lesson, onClick }) {
     const VITE_BE_API_BASE_URL = import.meta.env.VITE_BE_API_BASE_URL;
-    const inputFields = ['Tên khóa học', 'Mô tả', 'Lớp', 'Môn học'];
-    const outputFields = ['title', 'description', 'grade', 'subject', 'teacherId'];
+    const [answerCount, setAnswerCount] = useState(0);
     const [updateStateForm, setUpdateStateForm] = React.useState(false);
     const dispatch = useDispatch();
     const handleClick = (item) => {
@@ -53,9 +53,13 @@ function Menu({ menuItems, course, lesson, onClick }) {
                         alert('Xóa bài học thất bại');
                     });
             }
-            if (item.label === 'Chỉnh sửa bài học') {
-                dispatch(showForm('Chỉnh sửa bài học'));
+            if (item.label === 'Chinh sửa tài liệu') {
+                console.log('Chỉnh sửa bài học');
+                dispatch(showForm(`Chỉnh sửa bài học ${lesson._id}`));
                 setUpdateStateForm(true);
+            }
+            if (item.label === 'Thêm đáp án') {
+                dispatch(showForm('Thêm đáp án'));
             }
         }
     };
@@ -66,7 +70,7 @@ function Menu({ menuItems, course, lesson, onClick }) {
                 {menuItems.map((item, index) => {
                     return (
                         <li key={index} className={cx('menu-item')} onClick={() => handleClick(item)}>
-                            {item.label == 'Theo dõi khóa học' ? (
+                            {item.label == 'Theo dõi khóa học' && course?._id ? (
                                 <Link to={`/follow/${course._id}`} className={cx('link-none')}>
                                     {item.label}
                                 </Link>
@@ -77,18 +81,16 @@ function Menu({ menuItems, course, lesson, onClick }) {
                     );
                 })}
             </ul>
-
-            {updateStateForm && (
-                <Form
-                    formName={'Chỉnh sửa khóa học'}
-                    fieldsInput={inputFields}
-                    fieldsOutput={outputFields}
-                    api={`${VITE_BE_API_BASE_URL}/course/update/${course._id}`}
-                    method="put"
-                    isShowValue={true}
-                    course={course}
-                />
-            )}
+            <Form
+                formName={'Thêm đáp án'}
+                method="post"
+                api={`${VITE_BE_API_BASE_URL}/lesson/create/${lesson?._id}`}
+                isSubmit={false}
+            >
+                <div className={cx('update-answers')}>
+                    <Chat lesson={lesson} />
+                </div>
+            </Form>
         </div>
     );
 }

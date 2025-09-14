@@ -1,5 +1,4 @@
 .wrapper{
-    margin-top: 100px;
     padding: 0 50px 0 0;
 }
 
@@ -19,7 +18,7 @@
     width: 72px;
     height: 72px;
     cursor: pointer;
-    &> a{
+    &> p{
         text-decoration: none;
         color: black;
         font-size: 12px;
@@ -29,4 +28,13 @@
 
 .icon{
     font-size: 25px;
+}
+
+.link-none{
+    color: #555;
+    text-decoration: none;
+    &:hover{
+      color: #555;
+      text-decoration: none;
+    }
 }
