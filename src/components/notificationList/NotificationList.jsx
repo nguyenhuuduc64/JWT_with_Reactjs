@@ -4,7 +4,6 @@ import styles from './notificationList.module.scss';
 
 const cx = classNames.bind(styles);
 function NotificationList({ items }) {
-    console.log(items);
     return (
         <div className={cx('notificationlist-wrapper')}>
             {items.map((item, index) => (

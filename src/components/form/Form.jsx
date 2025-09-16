@@ -59,7 +59,6 @@ function Form({
         try {
             let fileUrl = null;
             let fileName = null;
-            console.log('try truoc');
             // Nếu có file trong formData thì upload lên supabase
             if (formData.file) {
                 const file = formData.file;

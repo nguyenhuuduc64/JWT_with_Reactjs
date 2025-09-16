@@ -106,7 +106,6 @@ function CourseDetail({}) {
         }
     };
 
-    console.log('questions', questions);
     switch (role) {
         case 'student':
             return (
@@ -164,7 +163,7 @@ function CourseDetail({}) {
                             <div className={cx('add-lession')}>
                                 <Button name="Thêm bài học" onClick={() => dispatch(showForm('Thêm bài học mới'))} />
                                 <Button
-                                    name={'Thêm bài trắc nghiệm mới'}
+                                    name={'Thêm câu hỏi trắc nghiệm mới'}
                                     onClick={() => setShowQuestionForm((prev) => !prev)}
                                 />
                                 <Button name={'Tạo bài trắc nghiệm'} onClick={() => setShowTestForm((prev) => !prev)} />

@@ -60,7 +60,6 @@ function Chat({ lesson }) {
     };
 
     console.log('textcontentForchat', textContentForChat);
-    console.log('answer:', answer);
     return (
         <div className={cx('chat-wrapper')}>
             <div>

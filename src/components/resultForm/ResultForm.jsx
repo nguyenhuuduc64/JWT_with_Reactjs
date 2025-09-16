@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './resultForm.module.scss';
 import Button from '../button/Button';
+import { useSelector } from 'react-redux';
 const cx = classNames.bind(styles);
 
 function ResultForm({ lesson }) {
@@ -10,6 +11,8 @@ function ResultForm({ lesson }) {
     const [questionCount, setQuestionCount] = useState(0);
     const [answers, setAnswers] = useState([]);
     const [result, setResult] = useState({});
+    const multipleAnswers = useSelector((state) => state.answer.answers);
+
     useEffect(() => {
         axios.get(answerCountApi).then((res) => setQuestionCount(res.data.questionsCount));
         return () => {};
@@ -26,26 +29,40 @@ function ResultForm({ lesson }) {
                 setResult(res.data);
             });
     };
-    console.log('result', result);
     return (
         <div className={cx('question-count-wrapper')}>
-            <span>Số câu hỏi: {questionCount}</span>
-            <div className={cx('question-item')}>
-                {Array.from({ length: questionCount }).map((_, index) => (
-                    <div key={index} className={cx('col-3')}>
-                        <input type="text" placeholder={`${index + 1}`} onChange={handleChangeAnswer(index)} />
+            {lesson.type == 'pdf' && (
+                <>
+                    <div className={cx('question-item')}>
+                        {Array.from({ length: questionCount }).map((_, index) => (
+                            <div key={index} className={cx('col-3')}>
+                                <input type="text" placeholder={`${index + 1}`} onChange={handleChangeAnswer(index)} />
+                            </div>
+                        ))}
                     </div>
-                ))}
-            </div>
-            <Button name={'Gửi đáp án'} onClick={() => handleSubmitAnswer(answers)} />
-            <div>
-                <div>
-                    <p>Điểm số của bạn: {Math.floor(10 * (result.score / result.maxScore), 2)}</p>
-                    <p>
-                        Số câu đúng: {result.score}/{result.maxScore}
-                    </p>
-                </div>
-            </div>
+                    <span>Số câu hỏi: {questionCount}</span>
+                    <Button name={'Gửi đáp án'} onClick={() => handleSubmitAnswer(answers)} />
+                    <div>
+                        <p>Điểm số của bạn: {Math.floor(10 * (result.score / result.maxScore), 2)}</p>
+                        <p>
+                            Số câu đúng: {result.score}/{result.maxScore}
+                        </p>
+                    </div>
+                </>
+            )}
+            {lesson.type == 'multiple' && (
+                <>
+                    <span>Số câu hỏi: {questionCount}</span>
+                    <div>
+                        <p>Điểm số của bạn: {Math.floor(10 * (result.score / result.maxScore), 2)}</p>
+                        <p>
+                            Số câu đúng: {result.score}/{result.maxScore}
+                        </p>
+                        <Button name={'Gửi đáp án mul'} onClick={() => handleSubmitAnswer(multipleAnswers)} />
+                    </div>
+                </>
+            )}
+            <div></div>
         </div>
     );
 }

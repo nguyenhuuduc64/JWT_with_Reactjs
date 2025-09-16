@@ -11,14 +11,12 @@ import ResultForm from '../resultForm/ResultForm';
 const cx = classNames.bind(styles);
 
 function LessonCard({ lesson, role }) {
-    console.log(lesson);
     const VITE_BE_API_BASE_URL = import.meta.env.VITE_BE_API_BASE_URL;
     const [menuState, setMenuState] = useState(false);
     const menuRef = useRef(null);
     const [showEmbed, setShowEmbed] = useState(false);
     const updateLessonApi = `${VITE_BE_API_BASE_URL}/lesson/${lesson._id}`;
     const deleteLessonApi = `${VITE_BE_API_BASE_URL}/lesson/${lesson._id}`;
-    console.log('role in lesson card', role);
     useEffect(() => {
         function handleClickOutside(e) {
             if (menuRef.current && !menuRef.current.contains(e.target)) {
@@ -79,7 +77,6 @@ function LessonCard({ lesson, role }) {
     ];
 
     const renderEmbedMul = () => {
-        console.log(lesson.questions);
         return (
             <div className={cx('answer-form', 'col-8')}>
                 <AnswerForm questions={lesson.questions} />

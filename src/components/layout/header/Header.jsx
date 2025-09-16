@@ -76,7 +76,6 @@ function Header() {
         };
         getRequestJointCourse();
     }, [user]);
-    console.log('join req', joinRequests);
     return (
         <header className={cx('wrapper')}>
             <div className={cx('logo')}>
